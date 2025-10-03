@@ -35,7 +35,7 @@ ax.text(0.2, 4e-17, 'Transplanckian', color = 0.5 * PINK, ha = 'center', va = 'c
 
 HI_ref = 1e12 # in GeV
 lmbda_ref = 1e-9
-iso_factor = 2.40 # output of Pdel_plot.py
+iso_factor = 2.68 # output of Pdel_plot.py
 slope = 9.45e-2 # output of Pdel_plot.py
 ax.fill_between(masses, iso_factor * lmbda_ref * (HI1 / HI_ref) ** (slope / 2), 1, color = RED, alpha = 0.2, zorder = 0.8)
 ax.loglog(masses, np.full_like(masses, iso_factor * lmbda_ref * (HI1 / HI_ref) ** (slope / 2)), color = RED, zorder = 0.8)

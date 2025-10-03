@@ -23,7 +23,7 @@ BLUE = (0.317647, 0.654902, 0.752941)
 ORANGE = (1., 0.721569, 0.219608)
 
 cmb = np.loadtxt('cmb.txt').T
-cmb[1] *= (0.14 / 0.12) ** 2
+cmb[1] *= (0.32 / 0.26) ** 2
 ax.fill_between(cmb[0], cmb[1], 1000, color = '0.9')
 ax.plot(cmb[0], cmb[1], color = '0.75')
 ax.text(5e-3, 3e-6, 'CMB', color = '0.2', ha = 'center', va = 'center')
