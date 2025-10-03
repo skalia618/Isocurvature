@@ -10,20 +10,22 @@ num_tau = 10000
 numk = 10000
 alpha_i = 8
 
-lmbda = 1e-9
-V = lambda phi: lmbda * phi ** 4 / 24
-dV = lambda phi: lmbda * phi ** 3 / 6
-ddV = lambda phi: lmbda * phi ** 2 / 2
-phi_i = np.sqrt(6 * HI ** 2 * alpha_i / lmbda)
-filename = 'Pdel_p4'
+##lmbda = 1e-9
+##V = lambda phi: lmbda * phi ** 4 / 24
+##dV = lambda phi: lmbda * phi ** 3 / 6
+##ddV = lambda phi: lmbda * phi ** 2 / 2
+##phi_i = np.sqrt(6 * HI ** 2 * alpha_i / lmbda)
+##factor = 3 / 8
+##filename = 'Pdel_p4'
 
-##p = 2.1
-##Lambda = 4.7e11 # in GeV
-##V = lambda phi: Lambda ** (4 - p) * np.abs(phi) ** p
-##dV = lambda phi: np.sign(phi) * p * Lambda ** (4 - p) * np.abs(phi) ** (p - 1)
-##ddV = lambda phi: p * (p - 1) * Lambda ** (4 - p) * np.abs(phi) ** (p - 2)
-##phi_i = (3 * HI ** 2 * alpha_i / p / (p - 1) / Lambda ** (4 - p)) ** (1 / (p - 2))
-##filename = 'Pdel_p2.1'
+p = 2.1
+Lambda = 4.4e11 # in GeV
+V = lambda phi: Lambda ** (4 - p) * np.abs(phi) ** p
+dV = lambda phi: np.sign(phi) * p * Lambda ** (4 - p) * np.abs(phi) ** (p - 1)
+ddV = lambda phi: p * (p - 1) * Lambda ** (4 - p) * np.abs(phi) ** (p - 2)
+phi_i = (3 * HI ** 2 * alpha_i / p / (p - 1) / Lambda ** (4 - p)) ** (1 / (p - 2))
+factor = (10 - p) / 4 / p
+filename = 'Pdel_p2.1'
 
 def zero_mode(y, N):
     phi, dphi = y
@@ -67,7 +69,7 @@ def delsqr(k):
     phi0 = np.interp(Ns_k, Ns, sol0[:,0])
     dphi0 = np.interp(Ns_k, Ns, sol0[:,1])
 
-    return (3 / 8) ** 2 * k ** 3 / (2 * np.pi ** 2) * np.abs(delta(phi0[-1], dphi0[-1], solk_N[-1,0], solk_N[-1,1])) ** 2
+    return factor ** 2 * k ** 3 / (2 * np.pi ** 2) * np.abs(delta(phi0[-1], dphi0[-1], solk_N[-1,0], solk_N[-1,1])) ** 2
 
 invMpc_to_GeV = 6.3949e-39
 km_per_sec = 3.3356e-6
@@ -84,6 +86,6 @@ print('a_today: {:.2e}'.format(a_today))
 ks_today = np.logspace(-4, 6, num = 100) # in Mpc^-1
 ks_rh = ks_today * a_today * invMpc_to_GeV # in GeV
 Pdel = np.array([delsqr(k) for k in ks_rh])
-coeff = (3 / 8) ** 2 / 12 / np.pi ** 2 / alpha[-1] * dV(sol0[-1,0]) ** 2 * ddV(sol0[-1,0]) / V(sol0[-1,0]) ** 2
+coeff = factor ** 2 / 12 / np.pi ** 2 / alpha[-1] * dV(sol0[-1,0]) ** 2 * ddV(sol0[-1,0]) / V(sol0[-1,0]) ** 2
 exp = np.interp(ks_rh, HI * np.exp(Ns), -2 * np.cumsum(alpha[::-1])[::-1] * (Ns[1] - Ns[0]))
 np.savez(filename, HI = HI, ks = ks_today, Pdel = Pdel, coeff = coeff, exp = exp)
