@@ -1,6 +1,6 @@
-# Generic isocurvature fluctuations of scalar spectators
+# Dynamically generated tilt of isocurvature fluctuations
 
-This repository contains all the code used to generate the plots in arXiv:25XX.XXXXX.  If you have any questions, please contact Saarik Kalia (skalia618@gmail.com).
+This repository contains all the code used to generate the plots in arXiv:25XX.XXXXX.  If you have any questions, please contact Saarik Kalia (skalia@ifae.es).
 
 This repository contains the following:
 - alpha.py: Generates left plot of Fig. 1
