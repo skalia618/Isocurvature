@@ -54,7 +54,7 @@ rho_DM = 3 * omegac * H0 ** 2 / 8 / np.pi / GN
 mDM = m * rho_DM / rhos[-1] * (a_today / a_rad(taus[-1])) ** 3
 print('HI: {:.2e} GeV'.format(HI))
 print('lambda: {:.2e}'.format(lmbda))
-print('mass: {:.2e} eV'.format(mDM))
+print('mass: {:.2e} eV'.format(mDM * 1e9))
 
 rhom = 2.5 * V(np.sqrt(12 * m ** 2 / lmbda))
 am = a_rad(taus[np.argmin(np.abs(rhos - rhom))])
