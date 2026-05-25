@@ -22,6 +22,11 @@ exp2 = data2['exp']
 BLUE = (0.317647, 0.654902, 0.752941)
 ORANGE = (1., 0.721569, 0.219608)
 
+uvlf = np.loadtxt('uvlf.txt').T
+uvlf[1] *= (0.32 / 0.26) ** 2
+ax.fill_between(uvlf[0], uvlf[1], 1000, color = '0.95', zorder = 0.9)
+ax.plot(uvlf[0], uvlf[1], color = '0.8', zorder = 0.9)
+ax.text(0.8, 2.9e-7, 'UVLF', color = '0.2', ha = 'center', va = 'center', size = 'small')
 cmb = np.loadtxt('cmb.txt').T
 cmb[1] *= (0.32 / 0.26) ** 2
 ax.fill_between(cmb[0], cmb[1], 1000, color = '0.9')
@@ -50,7 +55,7 @@ ax.set_ylim(1e-14, 1)
 ax.set_yticks(np.logspace(-14, 0, 8))
 ax.set_xlabel(r'$k_\mathrm{today}\,[\mathrm{Mpc}^{-1}]$')
 ax.set_ylabel(r'$P^\mathrm{iso}_\delta(k)$')
-#ax.legend(loc = 'upper left')
+#ax.legend(loc = 'lower right')
 
 class CustomTicker(ticker.LogFormatterSciNotation): 
     def __call__(self, x, pos = None):
